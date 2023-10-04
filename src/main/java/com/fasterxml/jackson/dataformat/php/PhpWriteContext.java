@@ -18,9 +18,9 @@ import com.fasterxml.jackson.core.json.JsonWriteContext;
  * @author Stephan Wienczny
  */
 public class PhpWriteContext {
-    private JsonWriteContext _jsonCtx;
+    private final JsonWriteContext _jsonCtx;
 
-    private PhpWriteContext _parent;
+    private final PhpWriteContext _parent;
 
     private PhpWriteContext _child;
 
@@ -100,7 +100,7 @@ public class PhpWriteContext {
         return _jsonCtx.inArray();
     }
 
-    public String getTypeDesc() {
-        return _jsonCtx.getTypeDesc();
+    public String typeDesc() {
+        return _jsonCtx.typeDesc();
     }
 }

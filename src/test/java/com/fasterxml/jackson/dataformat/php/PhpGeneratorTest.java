@@ -3,7 +3,15 @@
  */
 package com.fasterxml.jackson.dataformat.php;
 
-import java.util.*;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /**
  *
@@ -14,6 +22,7 @@ public class PhpGeneratorTest extends BasePHPTestCase {
     /**
      * Test of parsing Strings into primitives
      */
+    @Test
     public void testSerialize_Primitives() throws Exception {
         String strVal = getMapper().writeValueAsString("foobar");
         assertEquals("s:6:\"foobar\"", strVal);
@@ -27,6 +36,7 @@ public class PhpGeneratorTest extends BasePHPTestCase {
         assertEquals("d:10.0", getMapper().writeValueAsString(10.0));
     }
 
+    @Test
     public void testSerialize_Map() throws Exception {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("key", 8);
@@ -35,6 +45,7 @@ public class PhpGeneratorTest extends BasePHPTestCase {
         assertEquals("a:2:{s:3:\"key\";i:8;s:4:\"key2\";s:5:\"value\";}", result);
     }
 
+    @Test
     public void testSerialize_Array() throws Exception {
         List<String> list = new ArrayList<String>();
         list.add("foo");
@@ -43,12 +54,13 @@ public class PhpGeneratorTest extends BasePHPTestCase {
         assertEquals("a:2:{i:0;s:3:\"foo\";i:1;s:3:\"bar\";}", result);
     }
 
+    @Test
     public void testSerialize_Object() throws Exception {
         String result = getMapper().writeValueAsString(new MyClass());
-        assertEquals("a:2:{s:3:\"foo\";s:3:\"baz\";s:3:\"bar\";i:10;}", result);       
+        assertEquals("a:2:{s:3:\"foo\";s:3:\"baz\";s:3:\"bar\";i:10;}", result);
     }
 
-    private class MyClass {
+    private static class MyClass {
         public String foo = "baz";
         public Integer bar = 10;
     }

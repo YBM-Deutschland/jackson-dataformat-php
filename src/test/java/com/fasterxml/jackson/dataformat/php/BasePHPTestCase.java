@@ -3,30 +3,15 @@ package com.fasterxml.jackson.dataformat.php;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * {@link junit.framework.TestCase} for PHP data format.
+ * Base test for PHP data format.
  */
-public abstract class BasePHPTestCase extends junit.framework.TestCase {
+public abstract class BasePHPTestCase {
   private PhpFactory phpFactory;
   private ObjectMapper mapper;
 
   public BasePHPTestCase() {
     super();
     loadMapper();
-  }
-
-  public BasePHPTestCase(final String name) {
-    super(name);
-    loadMapper();
-  }
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-  }
-
-  @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
   }
 
   private void loadMapper() {

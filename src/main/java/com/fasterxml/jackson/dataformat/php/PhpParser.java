@@ -3,11 +3,6 @@
  */
 package com.fasterxml.jackson.dataformat.php;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.base.ParserMinimalBase;
 import com.fasterxml.jackson.core.io.IOContext;
@@ -15,6 +10,11 @@ import com.fasterxml.jackson.core.json.JsonReadContext;
 import com.fasterxml.jackson.core.util.BufferRecycler;
 import com.fasterxml.jackson.core.util.TextBuffer;
 import com.fasterxml.jackson.dataformat.php.cfg.PackageVersion;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  *
@@ -36,9 +36,9 @@ public class PhpParser extends ParserMinimalBase {
     private boolean _assumeUTF8 = true;
     private ObjectCodec _objectCodec;
     private JsonReadContext _parsingContext;
-    private int _inputPtr = 0;
+    private final int _inputPtr = 0;
 
-    private int _currInputRowStart = 0;
+    private final int _currInputRowStart = 0;
 
     public PhpParser(final IOContext ctxt,final  BufferRecycler recycler, final int parserFeatures,
                      final ObjectCodec objectCodec, final Reader reader) {
@@ -50,7 +50,7 @@ public class PhpParser extends ParserMinimalBase {
     }
 
     @Override
-    public JsonToken nextToken() throws IOException, JsonParseException {
+    public JsonToken nextToken() throws IOException {
         if (_closed) {
             return null;
         }
@@ -75,12 +75,12 @@ public class PhpParser extends ParserMinimalBase {
     }
 
     @Override
-    protected void _handleEOF() throws JsonParseException {
+    protected void _handleEOF() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getCurrentName() throws IOException, JsonParseException {
+    public String getCurrentName() {
         if (_currToken == JsonToken.START_OBJECT || _currToken == JsonToken.START_ARRAY) {
             JsonReadContext parent = _parsingContext.getParent();
             return parent.getCurrentName();
@@ -116,32 +116,32 @@ public class PhpParser extends ParserMinimalBase {
     }
 
     @Override
-    public String getText() throws IOException, JsonParseException {
+    public String getText() {
         return _currentValue;
     }
 
     @Override
-    public char[] getTextCharacters() throws IOException, JsonParseException {
+    public char[] getTextCharacters() {
         return _currentValue.toCharArray();
     }
 
     @Override
     public boolean hasTextCharacters() {
-        return _currentValue != null && _currentValue.length() > 0;
+        return _currentValue != null && !_currentValue.isEmpty();
     }
 
     @Override
-    public int getTextLength() throws IOException, JsonParseException {
+    public int getTextLength() {
         return _currentValue.length();
     }
 
     @Override
-    public int getTextOffset() throws IOException, JsonParseException {
+    public int getTextOffset() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public byte[] getBinaryValue(final Base64Variant bv) throws IOException, JsonParseException {
+    public byte[] getBinaryValue(final Base64Variant bv) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -342,17 +342,17 @@ public class PhpParser extends ParserMinimalBase {
         return new JsonLocation(_ioContext.getSourceReference(),
                                 _currInputProcessed + _inputPtr - 1,
                                 _currInputRow, col);*/
-        return new JsonLocation(_ioContext.getSourceReference(), 0, 0, 0);
+        return new JsonLocation(_ioContext.contentReference(), 0, 0, 0);
     }
 
     @Override
-    public Number getNumberValue() throws IOException, JsonParseException {
+    public Number getNumberValue() {
         //TODO: deal with BigInt and also try to use Int wherever possible
         return Long.parseLong(_currentValue);
     }
 
     @Override
-    public NumberType getNumberType() throws IOException, JsonParseException {
+    public NumberType getNumberType() {
         //TODO: deal with BigInt and also try to use Int wherever possible
         if(_currToken == JsonToken.VALUE_NUMBER_INT) {
             return NumberType.INT;
@@ -363,42 +363,42 @@ public class PhpParser extends ParserMinimalBase {
     }
 
     @Override
-    public int getIntValue() throws IOException, JsonParseException {
+    public int getIntValue() {
         return Integer.parseInt(_currentValue);
     }
 
     @Override
-    public long getLongValue() throws IOException, JsonParseException {
+    public long getLongValue() {
         return Long.parseLong(_currentValue);
     }
 
     @Override
-    public BigInteger getBigIntegerValue() throws IOException, JsonParseException {
+    public BigInteger getBigIntegerValue() {
         return new BigInteger(_currentValue);
     }
 
     @Override
-    public float getFloatValue() throws IOException, JsonParseException {
+    public float getFloatValue() {
         return Float.parseFloat(_currentValue);
     }
 
     @Override
-    public double getDoubleValue() throws IOException, JsonParseException {
+    public double getDoubleValue() {
         return Double.parseDouble(_currentValue);
     }
 
     @Override
-    public BigDecimal getDecimalValue() throws IOException, JsonParseException {
+    public BigDecimal getDecimalValue() {
         return new BigDecimal(_currentValue);
     }
 
     @Override
-    public Object getEmbeddedObject() throws IOException, JsonParseException {
+    public Object getEmbeddedObject() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getValueAsString() throws IOException, JsonParseException {
+    public String getValueAsString() {
         return _currentValue;
     }
 }
