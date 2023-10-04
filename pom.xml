@@ -46,8 +46,7 @@
 
     <scm>
         <url>https://github.com/wienczny/jackson-dataformat-php</url>
-        <connection>scm:git:git://github.com/YBM-Deutschland/jackson-dataformat-php.git</connection>
-        <developerConnection>scm:git:git@github.com:YBM-Deutschland/jackson-dataformat-php.git</developerConnection>
+        <connection>scm:git:ssh://github.com/YBM-Deutschland/jackson-dataformat-php.git</connection>
         <tag>jackson-dataformat-php-1.2.0</tag>
     </scm>
 
